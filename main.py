@@ -7,6 +7,32 @@ Institution: Institute of Neuroscience, Glasgow University, Scotland.
 Implementation of AlexNet using Keras with Tensorflow backend. Code will preload the Oxford_Flowers102 dataset.
 Learning tracks the model's accuracy, loss, and top 5 error rate. For true comparision of performance to the original
 model (Krizhevsky et al. 2010) this implementation will need to be trained on Imagenet2010.
+
+Editor: Mike Chen
+Developers need to install the following libraries. 
+
+1. Normally speaking, we only nned to install tensorflow_datasets
+
+$ pip install tensorflow_datasets
+
+While running the script of main.py, it will build a directory "/home/user/tensorflow_datasets". It has two sub-directories 
+including downloads, oxford_flowers102. I assume that developers uses Ubuntu 18.04.  
+
+2. Install tfds-nightly
+
+If it raises NonMatchingChecksumError(resource.url, tmp_path) duruing the runtime, please make the following changes to adapt 
+to Oxford which owns the 102flowers data. 
+
+1). Remove the downloaded files
+
+rm -rf ~/tensorflow_datasets/oxford_flowers102/
+rm -rf ~/tensorflow_datasets/downloads
+
+
+2). Install tfds-nightly
+$ pip --no-cache-dir install tfds-nightly
+
+
 """
 
 from __future__ import absolute_import
@@ -21,8 +47,8 @@ import functools
 import numpy as np
 import matplotlib.pyplot as plt
 
-project_path = '/Users/henryp/PycharmProjects/AlexNet/'
-data_path = '/Users/henryp/PycharmProjects/AlexNet/data/'
+project_path = '/home/user/Documents/AlexNet_TF2.0/'
+data_path = '/home/user/Documents/AlexNet_TF2.0/data/'
 
 # Set global variables.
 epochs = 90
@@ -83,74 +109,6 @@ def load_data():
     print(info)
 
     return data_train, data_test, data_val, info
-
-
-def save_data():
-    """
-    If you have less than 16GB of RAM for Oxford_flowers and you want to use the augmented training dataset
-    (with rotations etc) you will need to save it to hard disk and then use a generator to train your networks.
-    This function saves the images (including augmented ones) to hard disk.
-    :return:
-    """
-
-    file_no = 1
-
-    data = tfds.load(name=data_set, split='train')
-    assert isinstance(data, tf.data.Dataset)
-
-    labels = []
-    file_names = []
-
-    for example in data:
-
-        image, label = example['image'], example['label']
-
-        # Resize images and add to dataset
-        image = tf.image.convert_image_dtype(image, tf.float32)
-        image = tf.image.resize(image, [256, 256])
-        labels.append(label.numpy())
-        np.save(data_path + 'NParray_' + str(file_no), image)
-        file_names.append('NParray_' + str(file_no))
-        file_no += 1
-
-        # Apply rotation to each image and add a copy to the dataset
-        image_rot = tf.image.rot90(image)
-        labels.append(label.numpy())
-        np.save(data_path + 'NParray_' + str(file_no), image_rot)
-        file_names.append('NParray_' + str(file_no))
-        file_no += 1
-
-        # Left-right and up-down flip images and add copies to dataset
-        image_up_flip = tf.image.flip_up_down(image)
-        labels.append(label.numpy())
-        np.save(data_path + 'NParray_' + str(file_no), image_up_flip)
-        file_names.append('NParray_' + str(file_no))
-        file_no += 1
-
-        image_left_flip = tf.image.flip_left_right(image)
-        labels.append(label.numpy())
-        np.save(data_path + 'NParray_' + str(file_no), image_left_flip)
-        file_names.append('NParray_' + str(file_no))
-        file_no += 1
-
-        # Apply random saturation change and add a copy to the dataset
-        image_sat = tf.image.random_saturation(image, lower=0.2, upper=0.8)
-        labels.append(label.numpy())
-        np.save(data_path + 'NParray_' + str(file_no), image_sat)
-        file_names.append('NParray_' + str(file_no))
-        file_no += 1
-
-    # One hot encode labels
-    print(len(labels))
-    labels = np.array(labels)
-    labels = utils.to_categorical(labels)
-
-    # Save labels array to disk
-    np.save(project_path + 'oh_labels', labels)
-
-    # Save filenames array to disk
-    file_names = np.array(file_names)
-    np.save(project_path + 'file_names', file_names)
 
 
 def preprocess_data(data_train, data_test, data_val):
@@ -403,8 +361,8 @@ def run_experiment(n, large_data_set=False, generator=False):
             visualize(data_train, data_test, info)
 
             if generator:
-                train_images_file_names = np.load('/Users/henryp/PycharmProjects/AlexNet/file_names.npy')
-                train_labels = np.load('/Users/henryp/PycharmProjects/AlexNet/oh_labels.npy')
+                train_images_file_names = np.load('/home/user/Documents/AlexNet_TF2.0/file_names.npy')
+                train_labels = np.load('/home/user/Documents/AlexNet_TF2.0/oh_labels.npy')
                 train_data = DataGenerator(train_images_file_names, train_labels, batch_size)
 
             else:
@@ -428,5 +386,5 @@ def run_experiment(n, large_data_set=False, generator=False):
     print('Min_accuracy={}'.format(np.min(acc_scores)), 'Max_accuracy={}'.format(np.max(acc_scores)))
 
 
-run_experiment(n, large_data_set=False, generator=True)
+run_experiment(n, large_data_set=False, generator=False)
 
