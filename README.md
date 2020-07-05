@@ -12,8 +12,10 @@ Learning tracks the model's accuracy, loss, and top 5 error rate. For true compa
 model (Krizhevsky et al. 2010) this implementation will need to be trained on Imagenet2010.
 
 Editor: Mike Chen
-Split the client appliction from the AlexNet model for better readibility, accessibiliuty and usability after deleting 
-the function of save_data(). Developers need to install the following libraries. 
+
+It is a good practice for the author to adopt the tensorflow_datasets library. Mike splits the client appliction from 
+the AlexNet model for better readibility, accessibiliuty and usability after deleting the function of save_data(). 
+Developers need to install the following libraries. 
 
 1.Normally speaking, we only need to install tensorflow_datasets
 
