@@ -23,7 +23,7 @@ project_path = '/home/mike/Documents/Alexnet_Client_Backend/'
 data_path = '/home/mike/Documents/Alexnet_Client_Backend/data/'
 
 # Set global variables.
-epochs = 1
+epochs = 100
 verbose = 1
 steps_per_epoch = 100
 batch_size = 100
