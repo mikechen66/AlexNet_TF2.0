@@ -36,6 +36,7 @@ adapt to Oxford which owns the 102flowers data.
 1). Remove the downloaded files
 
 rm -rf ~/tensorflow_datasets/oxford_flowers102/
+
 rm -rf ~/tensorflow_datasets/downloads
 
 2). Install tfds-nightly
