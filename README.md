@@ -42,5 +42,7 @@ rm -rf ~/tensorflow_datasets/downloads
 2). Install tfds-nightly
 
 $ pip --no-cache-dir install tfds-nightly
+
 or 
+
 $ pip3 --no-cache-dir install tfds-nightly
