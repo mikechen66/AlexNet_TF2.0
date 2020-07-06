@@ -1,4 +1,4 @@
-# ALEXNET Implementation in TensorFlow 2.0
+# AlexNet_TF2.0 Implementation with tensorflow_datasets
 
 An implementation of AlexNet (Krizhevsky et al.(2010)) written in TensorFlow 2.0.
 
