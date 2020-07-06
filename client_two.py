@@ -4,10 +4,6 @@ Use the command "run_experiment(n, large_data_set=True, generator=True)" to init
 the intermediate big data to make full use of the RAM(Random Access Memory).
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 import tensorflow as tf
 import tensorflow_datasets as tfds
 from tensorflow import keras
