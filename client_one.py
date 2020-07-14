@@ -13,6 +13,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from alexnet import AlexNet
 
+
+# Set up the GPU in the condition of allocation exceeds system memory. It avoids the the error and sudden stop 
+# of the runtime with the reminding message: Could not create cuDNN handle...
+gpus = tf.config.experimental.list_physical_devices('GPU')
+for gpu in gpus:
+    tf.config.experimental.set_memory_growth(gpu, True)
+
 # Need to create the fileholder named with Alexnet_Client_Backend
 project_path = '/home/mike/Documents/Alexnet_Client_Backend/'
 # Need to create the sub-fileholder named data
