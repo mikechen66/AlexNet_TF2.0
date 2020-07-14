@@ -13,9 +13,10 @@ model (Krizhevsky et al. 2010) this implementation will need to be trained on Im
 
 Editor: Mike Chen
 
-It is a good practice for the author to adopt the tensorflow_datasets library. Mike splits the client appliction from 
-the AlexNet model for better readibility, accessibiliuty and usability after deleting the function of save_data(). 
-Developers need to install the following libraries. 
+It is a good practice for the author to adopt the tensorflow_datasets library. Mike splits the client application from 
+the AlexNet model for better readibility, accessibiliuty and usability after deleting the function of save_data().In 
+addition, Mike corrected the errors of the original scripts. Developers need to install the following libraries. 
+
 
 1.Normally speaking, we only need to install tensorflow_datasets
 
@@ -27,6 +28,7 @@ $ pip3 install tensorflow_datasets
 
 While running the script of main.py, it builds a directory "/home/user/tensorflow_datasets". It has two sub-directories 
 including downloads, oxford_flowers102. I assume that developers uses Ubuntu 18.04. 
+
 
 2.Install tfds-nightly
 
@@ -47,7 +49,9 @@ or
 
 $ pip3 --no-cache-dir install tfds-nightly
 
+
 3. Install google-cloud-storage and google-auth
+
 
 1). Install pip google-cloud-storage v1.29.0
 
