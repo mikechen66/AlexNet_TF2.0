@@ -56,7 +56,7 @@ And then, we enter into the following sector.
 
 Install the compatible google-cloud-storage and google-auth versions
 
-1). Install pip google-cloud-storage v1.29.0
+1). Install google-cloud-storage v1.29.0
 
 $ pip install google-cloud-storage
 
@@ -66,4 +66,4 @@ of google-cloud-storage v1.29.0
 $ pip install google-auth==1.18.0
 
 It will remind users of uninstall the old google-auth version during installing
-the update google-auth. 
+the update google-auth. That is what we want.
