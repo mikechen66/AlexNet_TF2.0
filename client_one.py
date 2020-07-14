@@ -15,7 +15,7 @@ from alexnet import AlexNet
 
 
 # Set up the GPU in the condition of allocation exceeds system memory with the reminding message: Could not 
-# create cuDNN handle... The following lines of code avoids the sudden stop of the runtime. 
+# create cuDNN handle... The following lines of code can avoids the sudden stop of the runtime. 
 gpus = tf.config.experimental.list_physical_devices('GPU')
 for gpu in gpus:
     tf.config.experimental.set_memory_growth(gpu, True)
@@ -205,7 +205,6 @@ def run_experiment(n, large_data_set=False, generator=False):
         val_images, val_labels = preprocess_data(data_train, data_test, data_val)
 
         visualize(data_train, data_test, info)
-
 
         # Make image, label paris into the tf.data.Dataset, shuffle the data and specify its batch size.
         train_data = tf.data.Dataset.from_tensor_slices((train_images, train_labels))
