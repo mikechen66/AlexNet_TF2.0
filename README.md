@@ -1,6 +1,7 @@
 # AlexNet_TF2.0 Implementation with tensorflow_datasets
 
-An implementation of AlexNet (Krizhevsky et al.(2010)) written in TensorFlow 2.0.
+An implementation of AlexNet (Krizhevsky et al.(2010)) written in TensorFlow 2.0 and splite the original code
+into both the client the AlexNet model in the OOP style.
 
 This code preloads the Oxford_Flowers102 dataset from TensorFlows datasets API. To change which dataset to use
 change data_set variable to one from here: https://www.tensorflow.org/datasets/catalog/overview
@@ -21,7 +22,9 @@ Set up the GPU in the condition of allocation exceeds system memory with the rem
 handle... The following lines of code can avoid the sudden stop of the runtime. 
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
+
 for gpu in gpus:
+
     tf.config.experimental.set_memory_growth(gpu, True)
 
 To enable the runtime, users need to install the following libraries. 
