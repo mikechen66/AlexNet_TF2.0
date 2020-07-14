@@ -58,9 +58,12 @@ Install the compatible google-cloud-storage and google-auth versions
 
 1). Install pip google-cloud-storage v1.29.0
 
-$ pip google-cloud-storage
+$ pip install google-cloud-storage
 
 2). Install google -auth v1.18.0 due to the conflict of internal components 
 of google-cloud-storage v1.29.0
 
-$ pip google-auth==1.18.0
+$ pip install google-auth==1.18.0
+
+It will remind users of uninstall the old google-auth version during installing
+the update google-auth. 
