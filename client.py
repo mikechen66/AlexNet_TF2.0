@@ -1,29 +1,27 @@
 
 """
-Author: Henry Powell
-Institution: Institute of Neuroscience, Glasgow University, Scotland.
-Implementation of AlexNet using Keras with Tensorflow backend. Code will preload the Oxford_Flowers102 dataset.
-Learning tracks the model's accuracy, loss, and top 5 error rate. For true comparision of performance to the original
-model (Krizhevsky et al. 2010) this implementation will need to be trained on Imagenet2010.
+# Author: Henry Powell
+# Institution: Institute of Neuroscience, Glasgow University, Scotland.
+# Implementation of AlexNet using Keras with Tensorflow backend. Code will preload the Oxford_Flowers102 dataset.
+# Learning tracks the model's accuracy, loss, and top 5 error rate. For true comparision of performance to the original
+# model (Krizhevsky et al. 2010) this implementation will need to be trained on Imagenet2010.
 
-Editor: Mike Chen
-Split the client appliction from the AlexNet model and add necessary lines of code for better readibility, accessibiliuty
-and usability. Developers need to install the following libraries. In addition, Mike corrects both the logical and code 
-of line errors of the original script.  
+# Editor: Mike Chen
+# Split the client appliction from the AlexNet model and add necessary lines of code for better readibility, accessibiliuty
+# and usability. Developers need to install the following libraries. In addition, Mike corrects both the logical and code 
+# of line errors of the original script.  
 
-# Users can use the following different options as the the pair of arguments in the last line of code to run the script 
-# of the client for different scenarios. 
-# (large_data_set=False, generator=False), 
-or
-# (large_data_set=True, generator=False), 
-or
-# (large_data_set=False,generator=True)  
+# Users can use the following three options as the the pair of arguments in the last line of code to run the client for 
+# different scenarios. 
 #
-# List the last line of code in the script.  
-# run_experiment(n, large_data_set=False, generator=False)
-# 
-# However, it is not to comply with the logic to use the pair of arguments of (True,True).
-
+# Option 1 (default): 
+# run_experiment(n, large_data_set=False, generator=False), 
+# or
+# Option 2: 
+# run_experiment(n, large_data_set=True, generator=False), 
+# or
+# Option 3: 
+# run_experiment(n, large_data_set=False,generator=True)  
 """
 
 
