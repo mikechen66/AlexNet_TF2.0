@@ -1,7 +1,9 @@
 
-"""
-Use the command "run_experiment(n, large_data_set=False, generator=False)" to initiate the functional call.
-It show pictures, epochs/iterations and final score results but does not save the intermediate big data.
+"""Could not create cuDNN handle
+# Use the command "run_experiment(n, large_data_set=False, generator=False)" to initiate the functional call.
+# It show pictures, epochs/iterations and final score results but does not save the intermediate big data.
+# Add the GPU related code to remove the runtime error such as Could not create cuDNN handle while the random
+# access memory of computer has only the size of 16 GB. 
 """
 
 import tensorflow as tf
