@@ -52,7 +52,7 @@ $ pip3 --no-cache-dir install tfds-nightly
 And then, we enter into the following sector. 
 
 
-3. Install google-cloud-storage and google-auth
+3.Install google-cloud-storage and google-auth
 
 Install the compatible google-cloud-storage and google-auth versions
 
