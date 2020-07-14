@@ -22,6 +22,7 @@ Set up the GPU in the condition of allocation exceeds system memory with the rem
 handle... The following lines of code can avoid the sudden stop of the runtime. 
 
 """
+
 gpus = tf.config.experimental.list_physical_devices('GPU')
 
 for gpu in gpus:
