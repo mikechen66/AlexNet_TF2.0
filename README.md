@@ -15,8 +15,8 @@ model (Krizhevsky et al. 2010) this implementation will need to be trained on Im
 Editor: Mike Chen
 
 It is a good practice for the author to adopt the tensorflow_datasets library. Mike splits the client application from 
-the AlexNet model for better readibility, accessibiliuty and usability after deleting the function of save_data().In 
-addition, Mike corrects the logical and runtime errors of the original scripts. 
+the AlexNet model for better readibility, accessibiliuty and usability.In addition, Mike corrects the logical and 
+runtime errors of the original scripts. 
 
 Set up the GPU in the condition of allocation exceeds system memory with the reminding message: Could not create cuDNN 
 handle... The following lines of code can avoid the sudden stop of the runtime. 
