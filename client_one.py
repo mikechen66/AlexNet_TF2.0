@@ -14,8 +14,8 @@ import matplotlib.pyplot as plt
 from alexnet import AlexNet
 
 
-# Set up the GPU in the condition of allocation exceeds system memory. It avoids the the error and sudden stop 
-# of the runtime with the reminding message: Could not create cuDNN handle...
+# Set up the GPU in the condition of allocation exceeds system memory with the reminding message: Could not 
+# create cuDNN handle... The following lines of code avoids the sudden stop of the runtime. 
 gpus = tf.config.experimental.list_physical_devices('GPU')
 for gpu in gpus:
     tf.config.experimental.set_memory_growth(gpu, True)
@@ -40,10 +40,6 @@ data_set = "oxford_flowers102"
 acc_scores = []
 loss_scores = []
 top_5_acc_scores = []
-
-# Set up the top 5 error rate metric.
-# -top_5_acc = functools.partial(keras.metrics.top_k_categorical_accuracy, k=5)
-# -top_5_acc.__name__ = 'top_5_acc'
 
 
 # Create the Datagenerator class to generate the data in batches to train the network
@@ -168,14 +164,7 @@ def visualize(data_train, data_test, info):
     tfds.show_examples(info, data_train)
     tfds.show_examples(info, data_test)
 
-
-# With the three parameters, it calls the AlexNet model(as a class) in alexnet.py
-# -model = AlexNet(train_data, test_data, val_data)
-
-# Give the model structure summary after complete the above-mentioned calling. 
-# -model.summary()
-
-
+    
 def predictions(model, val_images, val_labels, num_examples=1):
     """
     Display some examples of the predicions that the network is making on the testing data.
