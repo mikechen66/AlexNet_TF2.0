@@ -21,6 +21,13 @@ runtime errors of the original scripts.
 Set up the GPU in the condition of allocation exceeds system memory with the reminding message: Could not create cuDNN 
 handle... The following lines of code can avoid the sudden stop of the runtime. 
 
+It is necessary that Random Access Memory(shortly RAM) is larger than or equal to 16G. If RAM is 16G, users need to 
+set the virtual memory to 16G with vm.swappiness=60 to avoid the error: could not create cudnn handle:CUDNN STATUS_INTERNAL
+ERROR. 
+
+Swap reference: 
+https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04
+
 """
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
