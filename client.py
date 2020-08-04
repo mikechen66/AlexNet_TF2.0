@@ -72,10 +72,8 @@ class DataGenerator(utils.Sequence):
         self.labels = labels
         self.batch_size = batch_size
 
-
     def __len__(self):
         return (np.ceil(len(self.image_file_names) / float(self.batch_size))).astype(np.int)
-
 
     def __getitem__(self, index):
         batch_image = self.image_file_names[index * self.batch_size: (index+1) * self.batch_size]
@@ -122,9 +120,7 @@ def save_data():
     file_names = []
 
     for example in data:
-
         image, label = example['image'], example['label']
-
         # Resize images and add them to dataset
         image = tf.image.convert_image_dtype(image, tf.float32)
         image = tf.image.resize(image, [227, 227])
@@ -206,7 +202,6 @@ def preprocess_data(data_train, data_test, data_val):
     train_labels = np.array(train_labels)
     train_labels = utils.to_categorical(train_labels)
 
-    
     # 2.Preprocess test images. 
     # Do the same as above but with the test and validation datasets.
     test_images = []
@@ -289,7 +284,6 @@ def run_experiment(n, large_data_set=False, generator=False):
     """
 
     for experiments in range(n):
-
         if large_data_set:
             save_data()
         else:
