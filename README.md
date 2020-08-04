@@ -30,10 +30,6 @@ with vm.swappiness=60 to avoid the error: could not create cudnn handle:CUDNN ST
 Swap reference: 
 https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04
 
-gpus = tf.config.experimental.list_physical_devices('GPU')
-for gpu in gpus:
-    tf.config.experimental.set_memory_growth(gpu, True)   
-
 To enable the runtime, users need to install the following libraries. 
 
 
