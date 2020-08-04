@@ -19,7 +19,7 @@ It is a good practice for the author to adopt the tensorflow_datasets library. M
 from the AlexNet model for better readibility, accessibiliuty and usability.In addition, Mike corrects the logical 
 and runtime errors of the original scripts. In addition, the script is changed to comply with TendorFlow 2.2 and 
 Keras 2.4.3. Please notice that TensorFlow 2.1 has a bug with CUPTI in the dev. environment of CUDA 11.0 and cuDNN 
-8.0.1, so the editor has to migrate from to TensorFlow 2.2 and Keras 2.4.3.
+8.0.1, so the editor has to migrate from the old versions to TensorFlow 2.2 and Keras 2.4.3.
 
 Set up the GPU in the condition of allocation exceeds system memory with the reminding message: Could not create 
 cuDNN handle... The following lines of code can avoid the sudden stop of the runtime. 
