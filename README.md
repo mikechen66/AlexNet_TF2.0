@@ -7,6 +7,7 @@ This code preloads the Oxford_Flowers102 dataset from TensorFlows datasets API. 
 change data_set variable to one from here: https://www.tensorflow.org/datasets/catalog/overview
 
 Author: Henry Powell
+
 Institution: Institute of Neuroscience, Glasgow University, Scotland.
 Implementation of AlexNet using Keras with Tensorflow backend. Code will preload the Oxford_Flowers102 dataset.
 Learning tracks the model's accuracy, loss, and top 5 error rate. For true comparision of performance to the 
@@ -29,11 +30,9 @@ with vm.swappiness=60 to avoid the error: could not create cudnn handle:CUDNN ST
 Swap reference: 
 https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04
 
-"""
 gpus = tf.config.experimental.list_physical_devices('GPU')
 for gpu in gpus:
     tf.config.experimental.set_memory_growth(gpu, True)   
-"""
 
 To enable the runtime, users need to install the following libraries. 
 
