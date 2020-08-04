@@ -106,22 +106,24 @@ def preprocess_data(data_train, data_test, data_val):
     # Since the images in Oxford_Flowers are not preprocessed, we need to resize them all so that the network
     # takes inputs that are all the same size. We will also transform the data to help the network generalize.
     for example in data_train.take(-1):
-        # Get images and labels from the Dataset object
+        # Get images and labels from the Dataset object, resize images and add to dataset
         image, label = example['image'], example['label']
-
-        # Resize images and add to dataset
         image = tf.image.convert_image_dtype(image, tf.float32)
         image = tf.image.resize(image, [227, 227])
         train_images.append(image.numpy())
         train_labels.append(label.numpy())
 
+    train_images = np.array(train_images)
+    train_labels = np.array(train_labels)
+    train_labels = utils.to_categorical(train_labels)
+
+
     
     # 2. Preprocess test images. 
-    # Do the same as above but with the test and validation datasets.
+    # Do the same as above 
     test_images = []
     test_labels = []
 
-    # Do the same as above... 
     for example in data_test.take(-1):
         image, label = example['image'], example['label']
         image = tf.image.convert_image_dtype(image, tf.float32)
@@ -134,11 +136,10 @@ def preprocess_data(data_train, data_test, data_val):
     test_labels = utils.to_categorical(test_labels)
 
     # 3. Preprocess val images. 
-    # Do the same as above but with the test and validation datasets.
+    # Do the same as above
     val_images = []
     val_labels = []
 
-    # Do the same as above... 
     for example in data_val.take(-1):
         image, label = example['image'], example['label']
         image = tf.image.convert_image_dtype(image, tf.float32)
