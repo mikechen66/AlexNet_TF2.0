@@ -1,4 +1,4 @@
-# AlexNet_TF2.1 Implementation with tensorflow_datasets
+# AlexNet_TF2.2 Implementation with tensorflow_datasets
 
 An implementation of AlexNet (Krizhevsky et al.(2010)) written in TensorFlow 2.0 and splite the original code
 into both the client the AlexNet model in the OOP style.
@@ -16,7 +16,9 @@ Editor: Mike Chen
 
 It is a good practice for the author to adopt the tensorflow_datasets library. Mike splits the client application 
 from the AlexNet model for better readibility, accessibiliuty and usability.In addition, Mike corrects the logical 
-and runtime errors of the original scripts. 
+and runtime errors of the original scripts. In addition, the script is changed to comply with TendorFlow 2.2 and 
+Keras 2.4.3. Please notice that TensorFlow 2.1 has a bug with CUPTI in the dev. environment of CUDA 11.0 and cuDNN 
+8.0.1, so the editor has to migrate from to TensorFlow 2.2 and Keras 2.4.3.
 
 Set up the GPU in the condition of allocation exceeds system memory with the reminding message: Could not create 
 cuDNN handle... The following lines of code can avoid the sudden stop of the runtime. 
@@ -86,8 +88,7 @@ Need to install the newer version due to the conflict of internal components of 
 
 $ pip install google-auth==1.18.0
 
-It will remind users of uninstall the old google-auth version during installing
-the update google-auth. That is what we want.
+It will remind users of uninstall the old google-auth version during installing the update google-auth. That is what we want.
 
 
 
