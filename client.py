@@ -72,7 +72,7 @@ top_5_acc_scores = []
 
 
 # Create the Datagenerator class to generate the data in batches to train the network
-class DataGenerator(utils.Sequence):
+class DataGenerator(tensorflow.keras.utils.Sequence):
 
     def __init__(self, image_file_names, labels, batch_size):
         self.image_file_names = image_file_names
