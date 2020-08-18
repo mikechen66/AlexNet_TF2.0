@@ -26,13 +26,14 @@
 
 
 import tensorflow as tf
+import tensorflow.keras.metrics
 import tensorflow_datasets as tfds
-from tensorflow import keras
-from keras import utils
+from tensorflow.keras.utils import to_categorical
 import functools
 import numpy as np
 import matplotlib.pyplot as plt
 from alexnet import AlexNet
+from numba import cuda
 
 
 # Set up the GPU in the condition of allocation exceeds system memory with the reminding message: Could not 
@@ -56,6 +57,12 @@ n = 1
 
 # Set the dataset which will be downladed and stored in system memory.
 data_set = "oxford_flowers102"
+
+
+# Set up the top 5 error rate metric.
+top_5_acc = functools.partial(tensorflow.keras.metrics.top_k_categorical_accuracy, k=5)
+top_5_acc.__name__ = 'top_5_acc'
+
 
 # This list keeps track of the training metrics for each iteration of training if users require to run an experiment,
 # if the users want to train the network n times and see how the training differs between the iterations of training.
@@ -200,7 +207,7 @@ def preprocess_data(data_train, data_test, data_val):
 
     train_images = np.array(train_images)
     train_labels = np.array(train_labels)
-    train_labels = utils.to_categorical(train_labels)
+    train_labels = to_categorical(train_labels)
 
     # 2.Preprocess test images. 
     # Do the same as above but with the test and validation datasets.
@@ -217,7 +224,7 @@ def preprocess_data(data_train, data_test, data_val):
 
     test_images = np.array(test_images)
     test_labels = np.array(test_labels)
-    test_labels = utils.to_categorical(test_labels)
+    test_labels = to_categorical(test_labels)
 
     # 3.Preprocess val images. 
     
@@ -234,7 +241,7 @@ def preprocess_data(data_train, data_test, data_val):
 
     val_images = np.array(val_images)
     val_labels = np.array(val_labels)
-    val_labels = utils.to_categorical(val_labels)
+    val_labels = to_categorical(val_labels)
 
     return data_train, data_test, data_val, \
            train_images, train_labels, test_images, test_labels, val_images, val_labels
@@ -249,8 +256,8 @@ def visualize(data_train, data_test, info):
     :param info: dataset.info for getting information about the dataset (number of classes, samples, etc.)
     :return: n/a
     """
-    tfds.show_examples(info, data_train)
-    tfds.show_examples(info, data_test)
+    tfds.show_examples(data_train, info)
+    tfds.show_examples(data_test, info)
 
 
 def predictions(model, val_images, val_labels, num_examples=1):
@@ -310,7 +317,15 @@ def run_experiment(n, large_data_set=False, generator=False):
                 val_data = val_data.batch(batch_size)
 
                 # With the three parameters, the client script calls the AlexNet model(as a class) in alexnet.py
-                model = AlexNet(train_data, test_data, val_data)            
+                model = AlexNet(train_data, test_data, val_data)    
+                
+                # Compile the model using Adam optimizer and categorical_crossentropy loss function.
+                model.compile(optimizer='adam',
+                              loss='categorical_crossentropy',
+                              metrics=['acc', top_5_acc])
+                
+                # Give the model structure summary after complete the above-mentioned calling. 
+                model.summary()
 
                 if generator:
                     file_names = np.load(data_path + 'file_names.npy')
@@ -327,9 +342,6 @@ def run_experiment(n, large_data_set=False, generator=False):
                               validation_data=val_data,
                               verbose=verbose,
                               steps_per_epoch=steps_per_epoch)
-
-                # Give the model structure summary after complete the above-mentioned calling. 
-                model.summary()
 
                 predictions(model, test_images, test_labels, num_examples=5)
 
@@ -351,3 +363,8 @@ def run_experiment(n, large_data_set=False, generator=False):
 # Users can use the different options including (False,False), (True,False), (False,True) to run the script. But it is not to 
 # comply with the logic to use (True,True)
 run_experiment(n, large_data_set=False, generator=False)
+
+
+cuda.select_device(0)
+cuda.close()
+
