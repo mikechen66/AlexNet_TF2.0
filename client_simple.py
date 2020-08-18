@@ -1,19 +1,26 @@
+# client_simple.py
 
 """
 # Use the command "run_experiment(n, large_data_set=False, generator=False)" to initiate the functional call.
 # It show pictures, epochs/iterations and final score results but does not save the intermediate big data.
 # Add the GPU related code to remove the runtime error such as Could not create cuDNN handle while the random
 # access memory of a computer has only the size of 16 GB. 
+
+$ python client_simple.py --cap-add=CAP_SYS_ADMIN
 """
 
 import tensorflow as tf
+import tensorflow.keras.metrics
 import tensorflow_datasets as tfds
-from tensorflow import keras
-from keras import utils
+# -from tensorflow import keras
+# -from keras import utils
+# -import tensorflow.keras.utils 
+from tensorflow.keras.utils import to_categorical
 import functools
 import numpy as np
 import matplotlib.pyplot as plt
 from alexnet import AlexNet
+from numba import cuda
 
 
 # Set up the GPU in the condition of allocation exceeds system memory with the reminding message: Could not 
@@ -27,6 +34,7 @@ project_path = '/home/mike/Documents/Alexnet_Client_Backend/'
 # Need to create the sub-fileholder named data
 data_path = '/home/mike/Documents/Alexnet_Client_Backend/data/'
 
+
 # Set global variables.
 epochs = 100
 verbose = 1
@@ -37,6 +45,12 @@ n = 1
 # Set the dataset which will be downladed and stored in system memory.
 data_set = "oxford_flowers102"
 
+
+# Set up the top 5 error rate metric.
+top_5_acc = functools.partial(tensorflow.keras.metrics.top_k_categorical_accuracy, k=5)
+top_5_acc.__name__ = 'top_5_acc'
+
+
 # This list keeps track of the training metrics for each iteration of training if users require to run an experiment,
 # if the users want to train the network n times and see how the training differs between the iterations of training.
 acc_scores = []
@@ -45,7 +59,7 @@ top_5_acc_scores = []
 
 
 # Create the Datagenerator class to generate the data in batches to train the network
-class DataGenerator(utils.Sequence):
+class DataGenerator(tensorflow.keras.utils.Sequence):
 
     def __init__(self, image_file_names, labels, batch_size):
         self.image_file_names = image_file_names
@@ -115,10 +129,9 @@ def preprocess_data(data_train, data_test, data_val):
 
     train_images = np.array(train_images)
     train_labels = np.array(train_labels)
-    train_labels = utils.to_categorical(train_labels)
+    # -train_labels = tensorflow.keras.utils.to_categorical(train_labels)
+    train_labels = to_categorical(train_labels)
 
-
-    
     # 2. Preprocess test images. 
     # Do the same as above 
     test_images = []
@@ -133,7 +146,8 @@ def preprocess_data(data_train, data_test, data_val):
 
     test_images = np.array(test_images)
     test_labels = np.array(test_labels)
-    test_labels = utils.to_categorical(test_labels)
+    # - test_labels = tensorflow.keras.utils.to_categorical(test_labels)
+    test_labels = to_categorical(test_labels)
 
     # 3. Preprocess val images. 
     # Do the same as above
@@ -149,7 +163,8 @@ def preprocess_data(data_train, data_test, data_val):
 
     val_images = np.array(val_images)
     val_labels = np.array(val_labels)
-    val_labels = utils.to_categorical(val_labels)
+    # -val_labels = tensorflow.keras.utils.to_categorical(val_labels)
+    val_labels = to_categorical(val_labels)
 
     return data_train, data_test, data_val, \
            train_images, train_labels, test_images, test_labels, val_images, val_labels
@@ -164,8 +179,10 @@ def visualize(data_train, data_test, info):
     :param info: dataset.info for getting information about the dataset (number of classes, samples, etc.)
     :return: n/a
     """
-    tfds.show_examples(info, data_train)
-    tfds.show_examples(info, data_test)
+    # -tfds.show_examples(info, data_train)
+    tfds.show_examples(data_train, info)
+     # -tfds.show_examples(info, data_test)
+    tfds.show_examples(data_test, info)
 
     
 def predictions(model, val_images, val_labels, num_examples=1):
@@ -220,16 +237,21 @@ def run_experiment(n, large_data_set=False, generator=False):
         val_data = val_data.batch(batch_size)
 
         # With the three parameters, the client script calls the AlexNet model(as a class) in alexnet.py
-        model = AlexNet(train_data, test_data, val_data)            
+        model = AlexNet(train_data, test_data, val_data)    
+
+        # Compile the model using Adam optimizer and categorical_crossentropy loss function.
+        model.compile(optimizer='adam',
+                      loss='categorical_crossentropy',
+                      metrics=['acc', top_5_acc])
+
+        # Give the model structure summary after completing the above-mentioned call. 
+        model.summary()
 
         model.fit(train_data,
                   epochs=epochs,
                   validation_data=val_data,
                   verbose=verbose,
                   steps_per_epoch=steps_per_epoch)
-
-        # Give the model structure summary after complete the above-mentioned calling. 
-        model.summary()
 
         predictions(model, test_images, test_labels, num_examples=5)
 
@@ -242,8 +264,6 @@ def run_experiment(n, large_data_set=False, generator=False):
         acc_scores.append(accuracy)
         top_5_acc_scores.append(top_5)
 
-        # return AlexNet(as model--hidden the return statement)
-
         # Print the mean, std, min, and max of the validation accuracy scores from your experiment.
         print(acc_scores)
         print('Mean_accuracy={}'.format(np.mean(acc_scores)), 'STD_accuracy={}'.format(np.std(acc_scores)))
@@ -251,3 +271,7 @@ def run_experiment(n, large_data_set=False, generator=False):
 
 
 run_experiment(n, large_data_set=False, generator=False)
+
+cuda.select_device(0)
+cuda.close()
+
