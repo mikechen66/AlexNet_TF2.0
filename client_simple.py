@@ -11,11 +11,9 @@ $ python client_simple.py --cap-add=CAP_SYS_ADMIN
 
 import tensorflow as tf
 import tensorflow.keras.metrics
-import tensorflow_datasets as tfds
-# -from tensorflow import keras
-# -from keras import utils
-# -import tensorflow.keras.utils 
+import tensorflow_datasets as tfds 
 from tensorflow.keras.utils import to_categorical
+
 import functools
 import numpy as np
 import matplotlib.pyplot as plt
