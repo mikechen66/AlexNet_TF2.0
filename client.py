@@ -1,15 +1,19 @@
 
 """
 # Author: Henry Powell
+
 # Institution: Institute of Neuroscience, Glasgow University, Scotland.
 # Implementation of AlexNet using Keras with Tensorflow backend. Code will preload the Oxford_Flowers102 dataset.
 # Learning tracks the model's accuracy, loss, and top 5 error rate. For true comparision of performance to the original
 # model (Krizhevsky et al. 2010) this implementation will need to be trained on Imagenet2010.
 
 # Editor: Mike Chen
+
 # Split the client appliction from the AlexNet model and add necessary lines of code for better readibility, accessibiliuty
 # and usability. Developers need to install the following libraries. In addition, Mike corrects both the logical and code 
-# of line errors of the original script.  
+# of line errors of the original script. Please make the command with the parameter as follows. 
+
+# $ python client.py --cap-add=CAP_SYS_ADMIN
 
 # Users can use the following three options as the the pair of arguments in the last line of code to run the client for 
 # different scenarios. 
