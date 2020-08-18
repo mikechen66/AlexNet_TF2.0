@@ -86,7 +86,7 @@ $ pip install google-auth==1.18.0
 It will remind users of uninstall the old google-auth version during installing the update google-auth. That is what we want.
 
 
-# How to excute the client
+# How to execute the client
 
 Please execute the client with the command with the CUPTI parameter as follows. 
 
