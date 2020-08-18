@@ -1,3 +1,4 @@
+
 # AlexNet Model 
 
 """
@@ -15,18 +16,11 @@ test_data, val_data, generator=False
 
 
 import tensorflow as tf
-from tensorflow.keras import Model
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Dropout, BatchNormalization
-import keras
-from keras import utils
 import numpy as np
-import functools
 
 
-# Set up the top 5 error rate metric.
-top_5_acc = functools.partial(keras.metrics.top_k_categorical_accuracy, k=5)
-top_5_acc.__name__ = 'top_5_acc'
 
 # Define the AlexNet model in the sequential superclass. 
 class AlexNet(Sequential):
@@ -93,8 +87,3 @@ class AlexNet(Sequential):
         # Output layer: softmax function of 102 classes of the dataset. This integer should be changed to match
         # the number of classes in your dataset if you change from Oxford_Flowers.
         self.add(Dense(units=102, activation='softmax'))
-
-        # Compile the model using Adam optimizer and categorical_crossentropy loss function.
-        self.compile(optimizer='adam',
-                     loss='categorical_crossentropy',
-                     metrics=['acc', top_5_acc])
